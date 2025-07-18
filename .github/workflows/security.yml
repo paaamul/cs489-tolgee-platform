@@ -2,7 +2,7 @@ name: Security Gate
 
 on:
   pull_request:
-    branches: [main secscan]
+    branches: [main, secscan]
 
 jobs:
   secrets-and-image-scan:
