@@ -25,7 +25,6 @@ jobs:
         uses: trufflesecurity/trufflehog@main
         with:
           path: .
-          extra_args: --since-commit=HEAD-1
 
       # Build Docker image using Gradle task
       - name: Build Docker image with Gradle
