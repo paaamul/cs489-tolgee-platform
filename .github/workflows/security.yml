@@ -6,7 +6,7 @@ on:
 
 jobs:
   secrets-and-image-scan:
-    name: "Secrets and  Image Scan"
+    name: "Secrets and Image Scan"
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -16,6 +16,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Optional: Set up Docker Buildx (if multi-arch support is ever needed)
+      # - name: Set up Docker Buildx
+      #   uses: docker/setup-buildx-action@v3
+
       # Secret key leak scan
       - name: TruffleHog secrets scan
         uses: trufflesecurity/trufflehog@main
@@ -24,15 +28,18 @@ jobs:
           scan: git
           fail: true
 
-      # Build Tolgee image
-      - name: Build Tolgee image
-        run: docker build -t tolgee:ci -f docker/app/Dockerfile .
+      # Build Docker image using Gradle task
+      - name: Build Docker image with Gradle
+        run: ./gradlew docker
+
+      - name: List Docker images (debug)
+        run: docker images
 
       # CVE Scan on that image
       - name: Grype image scan
         uses: anchore/scan-action@v3
         with:
-          image: tolgee:ci    # Should match the tag from previous step, note the colon!
+          image: tolgee/tolgee
           fail-build: true
           output-format: sarif
           acs-report-enable: true
