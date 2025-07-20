@@ -1,0 +1,41 @@
+name: Security Gate
+
+on:
+  workflow_dispatch:    # Allows you to run the scan manually from the Actions tab
+
+jobs:
+  trufflehog-full-history:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo (full history)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # Ensure full commit history is available
+
+      - name: Run TruffleHog on git history (last 1000 commits)
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: .
+          extra_args: --max-depth=1000
+
+      # Build Docker image using Gradle task
+      - name: Build Docker image with Gradle
+        run: ./gradlew docker
+
+      - name: List Docker images (debug)
+        run: docker images
+
+      # CVE Scan on that image
+      - name: Grype image scan
+        uses: anchore/scan-action@v3
+        with:
+          image: tolgee/tolgee
+          fail-build: true
+          output-format: sarif
+          acs-report-enable: true
+
+      # Upload SARIF to show alerts in PR
+      - name: Upload SARIF
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: grype.sarif
