@@ -27,6 +27,7 @@ jobs:
         uses: trufflesecurity/trufflehog@main
         with:
           path: .
+          extra_args: max_depth=1000
 
       # Build Docker image using Gradle task
       - name: Build Docker image with Gradle
