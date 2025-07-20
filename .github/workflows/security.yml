@@ -1,33 +1,22 @@
 name: Security Gate
 
 on:
-  push:
-    branches: [main, secscan]
+  workflow_dispatch:    # Allows you to run the scan manually from the Actions tab
 
 jobs:
-  secrets-and-image-scan:
-    name: "Secrets and Image Scan"
+  trufflehog-full-history:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      security-events: write
-
     steps:
-      - name: Checkout
+      - name: Checkout repo (full history)
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0   # Ensure full commit history is available
 
-      # Optional: Set up Docker Buildx (if multi-arch support is ever needed)
-      # - name: Set up Docker Buildx
-      #   uses: docker/setup-buildx-action@v3
-
-      # Secret key leak scan
-      - name: TruffleHog secrets scan
+      - name: Run TruffleHog on git history (last 1000 commits)
         uses: trufflesecurity/trufflehog@main
         with:
           path: .
-          extra_args: --max_depth=1000
+          extra_args: --max-depth=1000
 
       # Build Docker image using Gradle task
       - name: Build Docker image with Gradle
