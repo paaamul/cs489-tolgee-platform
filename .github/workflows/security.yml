@@ -1,7 +1,7 @@
 name: Secret Security Gate
 
 on:
-  workflow_dispatch:   # Manually triggered from the Actions tab
+  workflow_dispatch:
 
 jobs:
   trufflehog-full-history:
@@ -10,14 +10,14 @@ jobs:
       - name: Checkout repo (full history)
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0   # Full commit history
+          fetch-depth: 0
 
-      - name: Install TruffleHog
+      - name: Install TruffleHog v2
         run: pip install trufflehog
 
       - name: Run TruffleHog and save results
         run: |
-          trufflehog git file://. --max-depth=1000 > results.txt || true
+          trufflehog --max_depth=1000 . > results.txt || true
 
       - name: Upload TruffleHog findings as artifact
         uses: actions/upload-artifact@v4
