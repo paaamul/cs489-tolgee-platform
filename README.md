@@ -38,7 +38,7 @@ It saves you valuable time that would otherwise be spent on localization tasks w
 
 ### In context translating & One click screenshots
 
-Easily add translations to your code and edit them directly within your app using the Tolgee i18n tool. Simply hold the ALT/Option key and click on an element to open a dialog where you can modify your strings effortlessly—no need to navigate through bulky .json/.po/.whatever files. Plus, in-context translation works seamlessly even in the production environment.
+Easily add translation to your code and edit them directly within your app using the Tolgee i18n tool. Simply hold the ALT/Option key and click on an element to open a dialog where you can modify your strings effortlessly—no need to navigate through bulky .json/.po/.whatever files. Plus, in-context translation works seamlessly even in the production environment.
 
 Just one click—that’s all it takes to capture a screenshot of your application with highlighted phrases for translation. Simply hold ALT + click on a string, then hit the camera button. Boom! Your screenshot is instantly generated.
 
