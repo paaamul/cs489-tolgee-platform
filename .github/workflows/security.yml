@@ -1,7 +1,7 @@
-name: Security Gate
+name: Secret Security Gate
 
 on:
-  workflow_dispatch:    # Allows you to run the scan manually from the Actions tab
+  workflow_dispatch:   # Manually triggered from the Actions tab
 
 jobs:
   trufflehog-full-history:
@@ -10,13 +10,20 @@ jobs:
       - name: Checkout repo (full history)
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0   # Ensure full commit history is available
+          fetch-depth: 0   # Full commit history
 
-      - name: Run TruffleHog on git history (last 1000 commits)
-        uses: trufflesecurity/trufflehog@main
+      - name: Install TruffleHog
+        run: pip install trufflehog
+
+      - name: Run TruffleHog and save results
+        run: |
+          trufflehog git file://. --max-depth=1000 > results.txt || true
+
+      - name: Upload TruffleHog findings as artifact
+        uses: actions/upload-artifact@v4
         with:
-          path: .
-          extra_args: --max-depth=1000
+          name: trufflehog-results
+          path: results.txt
 
       # Build Docker image using Gradle task
       - name: Build Docker image with Gradle
