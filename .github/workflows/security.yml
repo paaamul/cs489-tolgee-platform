@@ -21,7 +21,7 @@ jobs:
 
       - name: Run TruffleHog and save results
         run: |
-          trufflehog --max_depth=100 . > results.txt || true
+          trufflehog --config rules.yml --max_depth=100 . > results.txt || true
 
       - name: Upload TruffleHog findings as artifact
         uses: actions/upload-artifact@v4

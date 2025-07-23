@@ -1,0 +1,2 @@
+detectors:
+    - name: AWS Access Key ID
