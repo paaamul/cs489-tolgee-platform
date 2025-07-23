@@ -28,11 +28,17 @@ jobs:
         with:
           name: trufflehog-results
           path: results.txt
-      - name: Fail if secrets found
+      #- name: Fail if secrets found
+      #  run: |
+      #    if grep -q "fakeaws.txt" results.txt; then
+      #      echo "Secrets found!"
+      #    exit 1
+      #    fi
+      - name: Fail if AWS secrets found
         run: |
-          if grep -q "fakeaws.txt" results.txt; then
-            echo "Secrets found!"
-          exit 1
+          if grep -E "AKIA[0-9A-Z]{16}" results.txt; then
+            echo "AWS Access Key found!"
+            exit 1
           fi
 
       # Build Docker image using Gradle task
