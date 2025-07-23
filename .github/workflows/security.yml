@@ -28,6 +28,12 @@ jobs:
         with:
           name: trufflehog-results
           path: results.txt
+      - name: Fail if secrets found
+        run: |
+          if grep -q "reason" results.txt; then
+            echo "Secrets found!"
+          exit 1
+          fi
 
       # Build Docker image using Gradle task
       #- name: Build Docker image with Gradle
