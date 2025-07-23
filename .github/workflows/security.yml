@@ -19,13 +19,6 @@ jobs:
           tar -xvf gitleaks.tar.gz
           sudo mv gitleaks /usr/local/bin
 
-      - name: Run Gitleaks with custom rules on last 10 commits
+      - name: Run Gitleaks on full history
         run: |
-          N=10
-          git log --pretty=format:"%H" --no-merges -n $N > commit_list.txt
-          EXITCODE=0
-          while read sha; do
-            echo "Scanning commit $sha"
-            gitleaks detect --commit=$sha --config=.gitleaks.toml --redact --exit-code=2 || EXITCODE=1
-          done < commit_list.txt
-          exit $EXITCODE
+          gitleaks detect --config=.gitleaks.toml --source=. --redact --exit-code=2
