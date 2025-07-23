@@ -1,64 +1,19 @@
-name: Secret Security Gate
+name: Gitleaks Secret Scan
 
 on:
   push:
-    branches: [secscan]
+    branches: [ secscan ]
   pull_request:
-    branches: [secscan]
-  workflow_dispatch:
+    branches: [ secscan ]
 
 jobs:
-  trufflehog-full-history:
+  gitleaks:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo (full history)
+      - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2
         with:
-          fetch-depth: 0
-
-      - name: Install TruffleHog v2
-        run: pip install trufflehog
-
-      - name: Run TruffleHog and save results
-        run: |
-          trufflehog --rules=rules.json --max_depth=100 . > results.txt || true
-
-      - name: Upload TruffleHog findings as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: trufflehog-results
-          path: results.txt
-      #- name: Fail if secrets found
-      #  run: |
-      #    if grep -q "fakeaws.txt" results.txt; then
-      #      echo "Secrets found!"
-      #    exit 1
-      #    fi
-      - name: Fail if AWS secrets found
-        run: |
-          if grep -E "AKIA[0-9A-Z]{16}" results.txt; then
-            echo "AWS Access Key found!"
-            exit 1
-          fi
-
-      # Build Docker image using Gradle task
-      #- name: Build Docker image with Gradle
-      #  run: ./gradlew docker
-
-      #- name: List Docker images (debug)
-      #  run: docker images
-
-      # CVE Scan on that image
-      #- name: Grype image scan
-      #  uses: anchore/scan-action@v3
-      #  with:
-      #    image: tolgee/tolgee
-      #    fail-build: true
-      #    output-format: sarif
-      #    acs-report-enable: true
-
-      # Upload SARIF to show alerts in PR
-      #- name: Upload SARIF
-      #  uses: github/codeql-action/upload-sarif@v2
-      #  with:
-      #    sarif_file: grype.sarif
+          args: --no-git -v
