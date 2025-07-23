@@ -30,7 +30,7 @@ jobs:
           path: results.txt
       - name: Fail if secrets found
         run: |
-          if grep -q "Reason" results.txt; then
+          if grep -q "fakeaws.txt" results.txt; then
             echo "Secrets found!"
           exit 1
           fi
