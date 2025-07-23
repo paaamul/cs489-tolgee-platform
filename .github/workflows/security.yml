@@ -3,8 +3,8 @@ name: Gitleaks Secret Scan
 on:
   push:
     branches: [ secscan ]
-  pull_request:
-    branches: [ secscan ]
+  #pull_request:
+  #  branches: [ secscan ]
 
 jobs:
   gitleaks:
