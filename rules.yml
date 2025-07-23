@@ -1,0 +1,20 @@
+rules:
+  - id: ssh-private-key
+    description: Detects SSH private keys
+    regex: '-----BEGIN [A-Z ]*PRIVATE KEY-----[\s\S]+?-----END [A-Z ]*PRIVATE KEY-----'
+    tags: [ssh, private-key]
+
+  - id: aws-secret-key
+    description: Detects AWS secret access keys
+    regex: 'AKIA[0-9A-Z]{16}|aws_secret_access_key\s*=\s*[A-Za-z0-9/+=]{40}'
+    tags: [aws, key]
+
+  - id: email-password
+    description: Detects email password assignments
+    regex: 'email\s*[:=]\s*["\']?.+?["\']?\s*[,;]\s*password\s*[:=]\s*["\']?.+?["\']?'
+    tags: [email, password]
+
+  - id: github-pat
+    description: Detects GitHub Personal Access Tokens
+    regex: 'ghp_[A-Za-z0-9]{36}'
+    tags: [github, pat, token]
