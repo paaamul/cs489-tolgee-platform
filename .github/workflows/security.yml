@@ -21,7 +21,7 @@ jobs:
 
       - name: Run Gitleaks on full history
         run: |
-          gitleaks detect --config=.gitleaks.toml --source=. --redact --exit-code=2
+          gitleaks detect --config=.gitleaks.toml --source=. --redact
       
       - name: Upload report artifact
         uses: actions/upload-artifact@v4
