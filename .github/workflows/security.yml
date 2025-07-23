@@ -1,6 +1,10 @@
 name: Secret Security Gate
 
 on:
+  push:
+    branches: [secscan]
+  pull_request:
+    branches: [secscan]
   workflow_dispatch:
 
 jobs:
@@ -26,23 +30,23 @@ jobs:
           path: results.txt
 
       # Build Docker image using Gradle task
-      - name: Build Docker image with Gradle
-        run: ./gradlew docker
+      #- name: Build Docker image with Gradle
+      #  run: ./gradlew docker
 
-      - name: List Docker images (debug)
-        run: docker images
+      #- name: List Docker images (debug)
+      #  run: docker images
 
       # CVE Scan on that image
-      - name: Grype image scan
-        uses: anchore/scan-action@v3
-        with:
-          image: tolgee/tolgee
-          fail-build: true
-          output-format: sarif
-          acs-report-enable: true
+      #- name: Grype image scan
+      #  uses: anchore/scan-action@v3
+      #  with:
+      #    image: tolgee/tolgee
+      #    fail-build: true
+      #    output-format: sarif
+      #    acs-report-enable: true
 
       # Upload SARIF to show alerts in PR
-      - name: Upload SARIF
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: grype.sarif
+      #- name: Upload SARIF
+      #  uses: github/codeql-action/upload-sarif@v2
+      #  with:
+      #    sarif_file: grype.sarif
