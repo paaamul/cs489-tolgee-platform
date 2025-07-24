@@ -21,7 +21,7 @@ jobs:
 
       - name: Run Gitleaks on full history
         run: |
-          gitleaks detect --config=.gitleaks.toml --source=. --redact --report-format=csv --report-path=gitleaks-report.csv --exit-code=2
+          gitleaks detect --source=. --redact --report-format=csv --report-path=gitleaks-report.csv --exit-code=2
       
       - name: Upload report artifact
         if: always()
