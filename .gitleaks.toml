@@ -1,23 +1,23 @@
-#[[rules]]
-#id = "ssh-private-key"
-#description = "Detect SSH private keys"
-#regex = '''-----BEGIN(?: [A-Z]+)? PRIVATE KEY-----[\s\S]+?-----END(?: [A-Z]+)? PRIVATE KEY-----'''
-#tags = ["ssh", "private-key"]
+[[rules]]
+id = "ssh-private-key"
+description = "Detect SSH private keys"
+regex = '''-----BEGIN(?: [A-Z]+)? PRIVATE KEY-----[\s\S]+?-----END(?: [A-Z]+)? PRIVATE KEY-----'''
+tags = ["ssh", "private-key"]
 
-#[[rules]]
-#id = "aws-secret-key"
-#description = "Detect AWS secret access keys"
-#regex = '''aws_secret_access_key\s*=\s*[A-Za-z0-9/+=]{10,}'''
-#tags = ["aws", "key"]
+[[rules]]
+id = "aws-secret-key"
+description = "Detect AWS secret access keys"
+regex = '''aws_secret_access_key\s*=\s*[A-Za-z0-9/+=]{10,}'''
+tags = ["aws", "key"]
 
-#[[rules]]
-#id = "email-password"
-#description = "Detect email password assignments"
-#regex = '''email\s*[:=]\s*["']?.+?["']?\s*[,;]\s*password\s*[:=]\s*["']?.+?["']?'''
-#tags = ["email", "password"]
+[[rules]]
+id = "email-password"
+description = "Detect email password assignments"
+regex = '''email\s*[:=]\s*["']?.+?["']?\s*[,;]\s*password\s*[:=]\s*["']?.+?["']?'''
+tags = ["email", "password"]
 
-#[[rules]]
-#id = "github-pat"
-#description = "Detect GitHub Personal Access Tokens"
-#regex = '''ghp_[A-Za-z0-9]{36}'''
-#tags = ["github", "pat", "token"]
+[[rules]]
+id = "github-pat"
+description = "Detect GitHub Personal Access Tokens"
+regex = '''ghp_[A-Za-z0-9]{36}'''
+tags = ["github", "pat", "token"]
