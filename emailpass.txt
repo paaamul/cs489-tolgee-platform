@@ -1,1 +1,1 @@
-p7yadav@uwaterloo.ca:StrongP@assw@rd!
+email: "test@example.com", password: "fakepassword123"
